@@ -1,0 +1,24 @@
+<main>
+  <div class="bg_color_2">
+    <div class="container margin_60_35">
+      <div id="login">
+        <h1>Login to Doctwin</h1>
+        <div class="box_form">
+          <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Your username" name="username" ngModel #usernameInput="ngModel" required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Your password" name="password" ngModel #passwordInput="ngModel" required>
+            </div>
+            <div class="form-group text-center add_top_20">
+              <input class="btn_1 medium" type="submit" value="Login">
+            </div>
+          </form>
+        </div>
+        <p class="text-center link_bright">Do not have an account yet? <a href="#0"><strong>Register now!</strong></a></p>
+      </div>
+      <!-- /login -->
+    </div>
+  </div>
+</main>

@@ -1,0 +1,9 @@
+.btnA{
+  border: none;
+  background: none;
+  outline: none;
+  color: #333;
+  padding: 0 8px 17px;
+  font-size: .875rem;
+  font-weight: 500;
+}
