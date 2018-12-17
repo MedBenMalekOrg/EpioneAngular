@@ -42,14 +42,21 @@ export class AuthService {
       )
       .subscribe(
         response => {
+
           const token = response.token;
           this.token = token;
           if (token) {
             this.isAuthenticated = true;
             console.log(response.user_id);
-            this.getUserData(token, response.user_id);
-            this.authStatusListener.next(true);
-            this.router.navigate(['/']);
+
+            this.http.get<User>(BACKEND_URL + '/getUserID/'+response.user_id)
+              .subscribe((res) => {
+                this.user = res;
+                this.saveAuthData(token, this.user);
+                this.authStatusListener.next(true);
+                this.router.navigate(['/']);
+
+              });
           }
         },
         error => {
@@ -59,13 +66,6 @@ export class AuthService {
       );
   }
 
-  private getUserData(token: string, userId: string) {
-    this.http.get<User>(BACKEND_URL + '/getUserID/'+userId)
-      .subscribe((response) => {
-        this.user = response;
-        this.saveAuthData(token, this.user);
-      });
-  }
 
   autoAuthUser() {
     const authInformation = this.getAuthData();
