@@ -14,6 +14,7 @@ export class AuthService {
   private token: string;
   private user: User;
   private authStatusListener = new Subject<boolean>();
+  private userListener = new Subject<User>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -29,12 +30,18 @@ export class AuthService {
     return this.user;
   }
 
+  getUserListner() {
+    return this.userListener.asObservable();
+  }
+
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
 
   login(username: string, password: string) {
     const authData: { username: string; password: string } = { username: username, password: password };
+    let userId;
+    let Thetoken;
     this.http
       .post<{ succes: string, user_id: string, token: string, type: string }>(
         BACKEND_URL + '/login',
@@ -42,30 +49,30 @@ export class AuthService {
       )
       .subscribe(
         response => {
-
-          const token = response.token;
-          this.token = token;
-          if (token) {
+          Thetoken = response.token;
+          this.token = Thetoken;
+          if (Thetoken) {
             this.isAuthenticated = true;
-            console.log(response.user_id);
-
-            this.http.get<User>(BACKEND_URL + '/getUserID/'+response.user_id)
-              .subscribe((res) => {
-                this.user = res;
-                this.saveAuthData(token, this.user);
-                this.authStatusListener.next(true);
-                this.router.navigate(['/']);
-
-              });
+            userId = response.user_id;
           }
         },
         error => {
           console.log(error);
           this.authStatusListener.next(false);
+        },
+        () => {
+          this.http.get<User>(BACKEND_URL + '/getUserID/'+userId)
+            .subscribe((res) => {
+              this.user = res;
+              this.userListener.next(this.user);
+            }, (e) => console.log('error', e), () => {
+              this.saveAuthData(Thetoken, this.user);
+              this.authStatusListener.next(true);
+              this.router.navigate(['/']);
+            });
         }
       );
   }
-
 
   autoAuthUser() {
     const authInformation = this.getAuthData();

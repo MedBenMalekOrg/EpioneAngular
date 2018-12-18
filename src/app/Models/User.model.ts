@@ -1,3 +1,6 @@
+import {Pattern} from './Pattern.model';
+import {Address} from './Adresse.model';
+
 export interface User {
   id: number;
   username: string;
@@ -5,11 +8,7 @@ export interface User {
   lastname: string;
   birthday: string;
   email: string;
-  adresse: {
-    street_name: string;
-    postal_code: string;
-    city: string;
-  };
+  adresse: Address;
   ville: string;
   sexe: string;
   civil_status: string;
@@ -23,19 +22,14 @@ export interface User {
   connected: string;
   type: string;
   biography: string;
-  patterns: [
-    {
-      id: string;
-      price: string;
-      label: string;
-      periode: string;
-      actif: string;
-    }
-    ];
+  patterns: Pattern[];
   doctolib: string;
   paymentMethod: string;
   officeAdress: string;
   remboursement: string;
   website: string;
   office_Number: string;
+  speciality: {
+    speciality: string
+  };
 }

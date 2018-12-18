@@ -25,8 +25,9 @@
             <li><span><a routerLink="home">Doctors</a></span></li>
             <li><span><a routerLink="home" target="_blank">Contact</a></span></li>
             <li *ngIf="userIsAuthenticated">
-              <span><button class="btnA">{{userInfo.username}}</button></span>
+              <span><button class="btnA">{{userInfo?.username}}</button></span>
               <ul>
+                <li><a *ngIf="userInfo?.type === 'patient'" routerLink="rate-list-appointments" >Appointments</a></li>
                 <li><a routerLink="home" (click)="onLogout()">Logout</a></li>
               </ul>
             </li>

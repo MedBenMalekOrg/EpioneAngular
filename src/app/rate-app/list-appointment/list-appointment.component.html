@@ -1,0 +1,136 @@
+<main>
+  <div id="results">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h4>List of your appointments</h4>
+        </div>
+        <div class="col-md-6">
+          <div class="search_bar_list">
+            <input type="text" class="form-control" placeholder="Doctor name">
+            <input type="submit" value="Search">
+          </div>
+        </div>
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /results -->
+
+  <div class="filters_listing">
+    <div class="container">
+      <ul class="clearfix">
+        <li>
+          <div class="switch-field">
+            <input   type="radio" id="all" name="app" value="all" [checked]="all">
+            <label (click)="all = true" for="all">All</label>
+            <input type="radio" id="notRated" name="app" value="notRated" [checked]="!rated && !all">
+            <label (click)="rated = false; all = false" for="notRated">No Rated</label>
+            <input  type="radio" id="rated" name="app" value="rated" [checked]="rated && !all">
+            <label (click)="rated = true; all = false" for="rated">Rated</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /filters -->
+  <div class="container margin_60_35">
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- /appointment -->
+        <div class="row" >
+          <ng-container *ngFor="let p of appWithRates">
+            <div class="col-md-4" *ngIf="p.rated == rated || all">
+              <div class="box_list">
+                <a *ngIf="p.rate >= 3" class="wish_bt"></a>
+                <figure>
+                  <img [src]="'assets/img/'+p.doctor.picture" class="img-fluid" alt="">
+                </figure>
+                <div class="wrapper">
+                  <small>{{p.doctor.speciality.speciality}}</small>
+                  <h3>Dr.{{p.doctor.firstname}} {{p.doctor.lastname}}</h3>
+
+                  <p>{{p.description}}</p>
+                  <span class="rating" *ngIf="(p.rate|round) == 0">
+                    <small > Note rated yet </small><br>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                  </span>
+                  <span class="rating" *ngIf="(p.rate|round) == 1">
+                    <small > {{p.rate}}/5 </small><br>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star "></i>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                  </span>
+                  <span class="rating" *ngIf="(p.rate|round) == 2">
+                    <small > {{p.rate}}/5 </small><br>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                  </span>
+                  <span class="rating" *ngIf="(p.rate|round) == 3">
+                    <small > {{p.rate}}/5 </small><br>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star"></i>
+                    <i class="icon_star"></i>
+                  </span>
+                  <span class="rating" *ngIf="(p.rate|round) == 4">
+                    <small > {{p.rate}}/5 </small><br>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star"></i>
+                  </span>
+                  <span class="rating" *ngIf="(p.rate|round) == 5">
+                    <small > {{p.rate}}/5 </small><br>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                    <i class="icon_star voted"></i>
+                  </span>
+                </div>
+                <ul style="height: 63px; text-align: center">
+                  <li *ngIf="!p.rated"><a routerLink="/rate-list-appointments" style="margin-right: 115px;">Rate</a></li>
+                  <li *ngIf="p.rated"><a style="margin-right: 115px; color: white; background-color: #e74e84">Rated</a></li>
+                </ul>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <!-- /appointment -->
+        <!-- /pagination -->
+        <nav aria-label="" class="add_top_20">
+          <ul class="pagination pagination-sm">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /pagination -->
+      </div>
+      <!-- /col -->
+    </div>
+    <!-- /row -->
+  </div>
+  <!-- /container -->
+</main>
+<!-- /main -->

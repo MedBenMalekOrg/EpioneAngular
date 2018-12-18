@@ -11,6 +11,8 @@ import { LoginComponent } from './auth/login/login.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './auth/auth-interceptor';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ListAppointmentComponent } from './rate-app/list-appointment/list-appointment.component';
+import { RoundPipe } from './rate-app/round.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    ListAppointmentComponent,
+    RoundPipe
   ],
   imports: [
     BrowserModule,
