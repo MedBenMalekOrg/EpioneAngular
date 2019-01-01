@@ -1,0 +1,207 @@
+
+<main>
+
+
+
+  <div id="results">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h4><strong>Showing 10</strong> of 140 results</h4>
+          <div class="notification">
+            <a href="NotificationDoctor"> <i class="pe-7s-alarm"> </i> </a>
+          </div>
+        </div>
+        <div class="col-md-6">
+
+          <div class="search_bar_list">
+
+            <input type="text" class="form-control" placeholder="Ex. Specialist, Name, Doctor...">
+            <input type="submit" value="Search">
+          </div>
+        </div>
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /results -->
+
+  <div class="filters_listing">
+    <div class="container">
+      <ul class="clearfix">
+        <li>
+          <h6>Type</h6>
+          <div class="switch-field">
+            <input type="radio" id="all" name="type_patient" value="all" checked>
+            <label for="all">All</label>
+            <input type="radio" id="doctors" name="type_patient" value="doctors">
+            <label for="doctors">Doctors</label>
+            <input type="radio" id="clinics" name="type_patient" value="clinics">
+            <label for="clinics">Clinics</label>
+          </div>
+        </li>
+        <li>
+          <h6>Layout</h6>
+          <div class="layout_view">
+            <a href="#0" class="active"><i class="icon-th"></i></a>
+            <a href="list.html"><i class="icon-th-list"></i></a>
+            <a href="list-map.html"><i class="icon-map-1"></i></a>
+          </div>
+        </li>
+        <li>
+          <h6>Sort by</h6>
+          <select name="orderby" class="selectbox">
+            <option value="Closest">Closest</option>
+            <option value="Best rated">Best rated</option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+          </select>
+        </li>
+      </ul>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /filters -->
+  <p *ngIf="message!=null">
+    <ngb-alert [dismissible]="false">
+      <strong>Message</strong> {{message}}
+    </ngb-alert>
+  </p>
+
+
+  <div class="container margin_60_35">
+
+
+
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-md-6">
+
+
+            <div class="box_list fadeIn" *ngFor="let p of patients" >
+              <a href="#0" class="wish_bt"></a>
+              <figure>
+                <a href="detail-page.html">
+                  <img [src]="p.picture" class="img-fluid" alt="">
+                  <div class="preview"><span>Read more</span></div>
+                </a>
+              </figure>
+              <div class="wrapper">
+                <small>Patient</small>
+                <h3>{{p.firstname}} {{p.lastname}}</h3>
+                <p>Birthday: {{p.birthday}}</p>
+                <p style="color: #0a652b"> City: {{p.adresse.city}}</p>
+                <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
+                <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
+                <ul>
+
+                  <li><a (click)="getPathFromPatient(p.id)">View path</a></li>
+                </ul>
+
+              </div>
+            </div>
+
+
+          </div>
+          <!-- /box_list -->
+
+          <!-- /box_list -->
+
+          <!-- /box_list -->
+
+          <!-- /box_list -->
+
+          <!-- /box_list -->
+
+          <!-- /box_list -->
+        </div>
+        <!-- /row -->
+        <nav aria-label="" class="add_top_20">
+          <ul class="pagination pagination-sm">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- /pagination -->
+      </div>
+      <!-- /col -->
+      <ng-container>
+        <aside class="col-lg-4" id="sidebar">
+          <div id="map_listing" class="normal_list" *ngIf="affichagePath">
+
+            <div class="strip_list" *ngFor="let p of paths">
+              <a href="#0" class="wish_bt"></a>
+              <figure>
+                <a href="detail-page.html"><img src="img/doctor_listing_1.jpg" alt=""></a>
+              </figure>
+              <small>Path</small>
+              <h3>{{p.type}}</h3>
+
+              <p style="color: darkgreen" *ngIf="p.validation==true"> Validated </p>
+              <p style="color: darkred" *ngIf="p.validation==false"> Not validated </p>
+              <p>Date: {{p.created_at | date}} </p>
+
+              <p *ngIf="p.justification!=null">Justification: {{p.justification}} </p>
+
+              <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
+              <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
+              <ul>
+
+                <li><a (click)="validatePath(p.id)">Validate path</a></li>
+              </ul>
+            </div>
+
+
+          </div>
+        </aside>
+      </ng-container>
+      <!-- /aside -->
+
+    </div>
+    <!-- /row -->
+  </div>
+  <!-- /container -->
+
+
+
+
+</main>
+
+
+
+<style>
+
+
+  .modal-backdrop {
+    z-index: -1;
+  }
+
+</style>
+
+
+
+<script>
+  $(document).ready(function(){
+// Show the Modal on load
+    if (TempData["msg"] != null)
+    {
+      $("#myModal").modal("show");
+    }
+
+// Hide the Modal
+    $("#myBtn").click(function () {
+      $("#myModal").modal("hide");
+    });
+
+  });
+</script>
