@@ -5,6 +5,7 @@
       <form>
         <div class="search_bar_wrapper">
           <div class="search_bar_list">
+
             <input type="text" class="form-control" placeholder="Ex. Specialist, Name, Doctor...">
             <input type="submit" value="Search">
           </div>
@@ -43,7 +44,8 @@
         </div>
         <!-- /filters -->
       </form>
-
+      <app-fb-like></app-fb-like>
+      <app-tweet></app-tweet>
       <div class="strip_list" *ngFor="let a of appointments">
         <a href="#0" class="wish_bt"></a>
         <figure>

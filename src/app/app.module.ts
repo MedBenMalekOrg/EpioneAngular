@@ -13,6 +13,18 @@ import {AuthInterceptor} from './auth/auth-interceptor';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ListAppointmentComponent } from './rate-app/list-appointment/list-appointment.component';
 import { RoundPipe } from './rate-app/round.pipe';
+import { RecommandationComponent } from './recommandation/recommandation.component';
+import { RecommandedPatientsComponent } from './recommandation/recommanded-patients/recommanded-patients.component';
+import { AddRecommandationComponent } from './recommandation/add-recommandation/add-recommandation.component';
+import { AgmCoreModule } from '@agm/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { UpdateRecommandationComponent } from './recommandation/update-recommandation/update-recommandation.component';
+import { PathPatientComponent } from './recommandation/path-patient/path-patient.component';
+import { ListNotificationPatientComponent } from './recommandation/list-notification-patient/list-notification-patient.component';
+import { ListNotificationDoctorComponent } from './recommandation/list-notification-doctor/list-notification-doctor.component';
+import { FbLikeComponent } from './recommandation/fb-like/fb-like.component';
+import { TweetComponent } from './recommandation/tweet/tweet.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +34,16 @@ import { RoundPipe } from './rate-app/round.pipe';
     FooterComponent,
     LoginComponent,
     ListAppointmentComponent,
-    RoundPipe
+    RoundPipe,
+    RecommandationComponent,
+    RecommandedPatientsComponent,
+    AddRecommandationComponent,
+    UpdateRecommandationComponent,
+    PathPatientComponent,
+    ListNotificationPatientComponent,
+    ListNotificationDoctorComponent,
+    FbLikeComponent,
+    TweetComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +51,11 @@ import { RoundPipe } from './rate-app/round.pipe';
     RouteModuleRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    NgbModule,
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCCDjpHRVBphhPAjBK53eZI5y45ouRw3no'
+    })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
