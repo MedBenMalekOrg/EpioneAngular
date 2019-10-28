@@ -28,8 +28,6 @@ message:string;
   positions : {
     lat: number;
     long:number;
-
-
   };
 
   constructor(private recommandationService: RecommandationService,private modalService: NgbModal,private route: ActivatedRoute) {
@@ -45,75 +43,54 @@ message:string;
     },(e) => {
       console.log('error',e);
     },() => {
-
-
     });
+
+
     this.sub = this.route
       .queryParams
       .subscribe(params => {
         // Defaults to 0 if no query param provided.
         this.id = +params['id'] || 0;
       });
-
-
-
   }
 
 
   searchByCity(city,speciality) {
     this.doctorsSpeciality=[];
     if (city.value.length === 0) {
-
       for (let i = 0; i < this.doctors.length; i++) {
         console.log(speciality.value);
         console.log(this.doctors[i].spec);
         if (this.doctors[i].spec === speciality.value) {
           this.doctorsSpeciality.push(this.doctors[i]);
-
-
         }
       }
-
-
     }
 
     console.log(speciality.value.length);
     if (speciality.value.length === 0) {
-
       for (let i = 0; i < this.doctors.length; i++) {
         console.log(city.value);
         console.log(this.doctors[i].adresse.city);
         if (this.doctors[i].adresse.city === city.value) {
           this.doctorsSpeciality.push(this.doctors[i]);
-
-
         }
-
         this.affichagecity = true;
         this.affichageall = false;
       }
-
     }
 
      if(speciality.value !=null && city.value!=null ) {
-
       for (let i = 0; i < this.doctors.length; i++) {
         console.log(city.value);
         console.log(this.doctors[i].adresse.city);
         if (this.doctors[i].adresse.city === city.value && this.doctors[i].spec=== speciality.value) {
           this.doctorsSpeciality.push(this.doctors[i]);
-
-
         }
-
         this.affichagecity = true;
         this.affichageall = false;
       }
-
     }
-
-
-
   }
 
 
@@ -145,11 +122,7 @@ message:string;
 
   RecommandateDoctor(type)
   {
-
-    console.log(this.recommandedDoctor);
-    console.log(this.id);
    this.message= this.recommandationService.addRecommandation(this.id,this.recommandedDoctor,type.value);
-console.log(this.message);
 this.addrecommandation=true;
 window.location.href = "http://localhost:4200/appointements";
 this.modalService.dismissAll();
