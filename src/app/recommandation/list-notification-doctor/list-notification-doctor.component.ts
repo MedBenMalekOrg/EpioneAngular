@@ -14,26 +14,19 @@ export class ListNotificationDoctorComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.appointmentsSub = this.recommandationService.listNotificationsDoctor().subscribe((response) => {
       this.notifications = response;
       console.log(this.notifications);
     },(e) => {
       console.log('error',e);
-    },() => {
-
-
-    });
-
+    },() => {});
   }
 
 
   openNotification(id)
   {
-
     this.recommandationService.openNotification(id);
     window.location.reload();
-
   }
 
 }
