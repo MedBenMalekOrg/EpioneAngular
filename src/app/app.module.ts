@@ -30,6 +30,7 @@ import { FindDoctorComponent } from './find-doctor/find-doctor.component';
 import { ListAppointmentsComponent } from './list-appointments/list-appointments.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +51,7 @@ import { ListAppointmentsComponent } from './list-appointments/list-appointments
     TweetComponent,
     PdfComponent,
     FindDoctorComponent,
-    ListAppointmentsComponent
+    ListAppointmentsComponent   
   ],
   imports: [
     BrowserModule,
