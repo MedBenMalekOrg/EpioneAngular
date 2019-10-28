@@ -151,7 +151,7 @@ message:string;
    this.message= this.recommandationService.addRecommandation(this.id,this.recommandedDoctor,type.value);
 console.log(this.message);
 this.addrecommandation=true;
-
+window.location.href = "http://localhost:4200/appointements";
 this.modalService.dismissAll();
   }
 

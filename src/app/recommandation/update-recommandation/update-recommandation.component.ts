@@ -229,16 +229,6 @@ let max=0;
 
     this.bestDoctors.push(this.doctors[index]);
 
- //   console.log(this.indice);
-
-
-   // if (this.test===false)
-    // {
-      // this.bestDoctors.push(this.doctors[0]);
-      // console.log(this.bestDoctors);
-    // }
-
-
 
   }
 
@@ -282,6 +272,7 @@ let max=0;
     this.addrecommandation=true;
 
     this.modalService.dismissAll();
+    window.location.href = "http://localhost:4200/recommandation";
   }
 
 
@@ -338,9 +329,16 @@ let max=0;
 
     }
 
+        if(speciality.value.length === 0 && city.value.length === 0) {
+          this.doctorsSpeciality = this.doctors;
+
+      }
+
+    }
 
 
-  }
+
+  
 
 
 }

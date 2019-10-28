@@ -1,0 +1,68 @@
+<main>
+  <div id="results">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h4><strong>List of all my appointments</strong></h4>
+        </div>
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+    <div class="margin_60_35" *ngIf="!appointments || (appointments && appointments.length == 0)">
+    <div class="container">
+      <div class="main_title">
+
+
+        <h1 >There is no appointments</h1>
+      </div>
+    </div>
+    </div>
+
+  <div class="row col-md-12 col-lg-12 " style="margin-top: 30px;">
+    <div class="col-lg-12 col-md-12">
+      <div class="strip_list " *ngFor="let a of appointments">
+        
+          
+            <figure  >
+              <a ><img src="{{a.doctor.picture}}" alt=""></a>
+            </figure>
+            <h3>Appointment with DR. {{a.doctor.firstname}} {{a.doctor.lastname}}<small style="color: #0a652b">{{a.status}}</small></h3>
+            <h6>Date: {{a.date}}</h6>
+            <h6>Description: {{a.description}}</h6>
+          
+        
+        
+        <ul class="right-ul">
+         
+           <a class="cursor btn btn-cancel" style="color:"  (click)="cancelAppointment(a.id)">Cancel your appointment</a>
+       
+         
+        </ul>
+      </div>
+    </div>
+    <!-- /content-left-->
+  </div>
+  <!-- /row-->
+</main>
+<!-- /container-fluid -->
+<!-- /map-right-->
+<style>
+.cursor {
+  cursor: pointer;
+}
+.btn-update {
+    color: white !important;
+    background-color: #8BC34A;
+    border-color: #8BC34A;
+    margin-right: 15px;
+}.btn-cancel {
+    color: white !important;
+    background-color: #E91E63;
+    border-color: #E91E63;
+}
+.right-ul{
+	text-align: right;
+}
+</style>

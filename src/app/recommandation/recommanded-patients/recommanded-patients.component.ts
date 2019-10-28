@@ -23,6 +23,7 @@ message:string;
 
 
     this.appointmentsSub = this.recommandationService.getPatientsForSpecialist().subscribe((response) => {
+
       this.patients = response;
     },(e) => {
       console.log('error',e);
@@ -36,6 +37,7 @@ message:string;
   getPathFromPatient(id) {
 
     this.appointmentsSub = this.recommandationService.getPathFromPatient(id).subscribe((response) => {
+            console.log(response)
       this.paths = response;
     },(e) => {
       console.log('error',e);
@@ -48,9 +50,10 @@ console.log(this.paths);
   }
 
 
-  validatePath(id) {
+  validatePath(p) {
 
-  this.message= this.recommandationService.validateRecommandation(id);
+  p.validation = false;
+  this.message= this.recommandationService.validateRecommandation(p.id);
 
   }
 }

@@ -24,6 +24,10 @@ import { ListNotificationPatientComponent } from './recommandation/list-notifica
 import { ListNotificationDoctorComponent } from './recommandation/list-notification-doctor/list-notification-doctor.component';
 import { FbLikeComponent } from './recommandation/fb-like/fb-like.component';
 import { TweetComponent } from './recommandation/tweet/tweet.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfComponent } from './recommandation/pdf/pdf.component';
+import { FindDoctorComponent } from './find-doctor/find-doctor.component';
+import { ListAppointmentsComponent } from './list-appointments/list-appointments.component';
 
 
 @NgModule({
@@ -43,7 +47,10 @@ import { TweetComponent } from './recommandation/tweet/tweet.component';
     ListNotificationPatientComponent,
     ListNotificationDoctorComponent,
     FbLikeComponent,
-    TweetComponent
+    TweetComponent,
+    PdfComponent,
+    FindDoctorComponent,
+    ListAppointmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +60,7 @@ import { TweetComponent } from './recommandation/tweet/tweet.component';
     FormsModule,
     NgbModule,
     ReactiveFormsModule,
+    PdfViewerModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCCDjpHRVBphhPAjBK53eZI5y45ouRw3no'
     })

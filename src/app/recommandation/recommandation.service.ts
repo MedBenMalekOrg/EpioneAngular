@@ -10,6 +10,7 @@ import {map} from 'rxjs/operators';
 const BACKEND_URL = environment.apiUrl + '/recommandation';
 const DOC_URL = environment.apiUrl + '/doctor';
 const RATE_URL = environment.apiUrl + '/rate';
+const APPOINTMENT_URL = environment.apiUrl + '/appointment';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +24,40 @@ export class RecommandationService {
 
   constructor(private authService: AuthService, private http: HttpClient) { }
 
+changeStatusAppointment(id,status){
+this.http.post<{ succes: string, NO: string,Error:string}>(APPOINTMENT_URL +
+    '/updatestatus?idAppointment='+id+'&status='+status,null
+
+    )
+    .subscribe(
+      response => {
+
+
+        if(response.succes!=null) {
+          this.message = response.succes;
+        }
+        else if(response.NO!=null){
+          this.message = response.NO;
+
+        }
+        else{
+          this.message = response.Error;
+        }
+        console.log(this.message);
+
+      },
+      error => {
+        console.log(error);
+
+      },
+      () => {
+
+        console.log(this.message);
+
+      }
+    );
+}
+
 
 
   listNotificationsPatient()
@@ -35,7 +70,7 @@ export class RecommandationService {
   listNotificationsDoctor()
   {
 
-    return this.http.get<object[]>(BACKEND_URL+'/listNotificationsForSpecialist?doctor='+this.authService.getUser().id);
+    return this.http.get<object[]>(BACKEND_URL+'/listNotificationsSpecialist?specialist='+this.authService.getUser().id);
 
   }
 

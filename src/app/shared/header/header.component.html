@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-lg-3 col-6">
         <div id="logo_home">
-          <h1><a title="DocTwin">DocTwin</a></h1>
+          <h1><a  href="/" title="DocTwin">DOCTWIN</a></h1>
         </div>
       </div>
       <div class="col-lg-9 col-6">
@@ -22,12 +22,17 @@
 
         <nav id="menu" class="main-menu">
           <ul>
-            <li><span><a routerLink="home">Doctors</a></span></li>
-            <li><span><a routerLink="home" target="_blank">Contact</a></span></li>
+            <li *ngIf="userInfo?.type === 'patient'" ><span><a routerLink="findDoctor">Find a Doctor</a></span></li>
             <li *ngIf="userIsAuthenticated">
               <span><button class="btnA">{{userInfo?.username}}</button></span>
               <ul>
-                <li><a *ngIf="userInfo?.type === 'patient'" routerLink="rate-list-appointments" >Appointments</a></li>
+
+                <li><a *ngIf="userInfo?.type === 'patient'" routerLink="listNotifications" >Notifications</a></li>
+                <li><a *ngIf="userInfo?.type === 'patient'" routerLink="my-appointments" >Appointments</a></li>
+                <li><a *ngIf="userInfo?.type === 'patient'" routerLink="path" >Patient path</a></li>
+                <li><a *ngIf="userInfo?.type === 'doctor'" routerLink="appointements" >Appointments</a></li>
+                <li><a *ngIf="userInfo?.type === 'doctor'" routerLink="recomendation" >Recomendation</a></li>
+                <li><a *ngIf="userInfo?.type === 'doctor'" routerLink="listNotificationsDoctor" >Notifications</a></li>
                 <li><a routerLink="home" (click)="onLogout()">Logout</a></li>
               </ul>
             </li>

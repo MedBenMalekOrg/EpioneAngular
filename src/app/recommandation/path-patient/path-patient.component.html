@@ -1,238 +1,85 @@
-
-  <main class="theia-exception">
-
-      <div class="col-md-6">
-
+<main>
+  <div id="results">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h4><strong>My patient path</strong></h4>
+        </div>
       </div>
-
-      <div id="results">
-          <div class="container">
-
-              <div class="row">
-                  <div class="col-md-6">
-                      <h4><strong>My </strong>Path</h4>
-                     <br />
-                      <div class="notification">
-                          <a href="Recommandation/Notification">  <i class="pe-7s-alarm"></i> </a>
-
-
-                      </div>
-
-
-                  </div>
-
-                  <div class="search_bar_list">
-
-
-                      <input type="text" class="form-control" placeholder="Ex. Specialist, Name, Doctor...">
-                      <input type="submit" value="Search">
-                  </div>
-              </div>
-              <!-- /row -->
+      <!-- /row -->
+    </div>
+  </div>
+  <div class="margin_60_35" *ngIf="!paths || (paths && paths.length == 0)">
+    <div class="container">
+      <div class="main_title">
+        <h1>There is no paths</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container margin_60_35">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="strip_list" *ngFor="let p of paths">
+          <figure>
+            <a><img src="/assets/img/path.png" alt=""></a>
+          </figure>
+          <h3>Patient Path</h3>
+          <ul>
+            <li (click)="showDoctors(p.id)"><a class="btn"><i class="icon_menu"></i> See more</a></li>
+          </ul>
+          <p *ngIf="p.validation==true" style="color:darkseagreen"> Validated </p>
+          <p *ngIf="p.validation==false" style="color:darkred">Not Validated </p>
+          <h6>Type of recommandation: {{p.type}}</h6>
+          <p>Date: {{p.created_at | date}} </p>
+          <p *ngIf="p.justification!=null">Justification: {{p.justification}} </p>
+        </div>
+        <!-- /strip_list -->
+      </div>
+      <aside class="col-lg-4" id="sidebar" id="hideShow" *ngIf="affichage">
+        <div class="box_profile" id="map_listing">
+          <h3 style="margin-top: 15px;">Your specialist Doctor </h3>
+          <h1>DR. {{specialist.firstname}} {{specialist.lastname}}</h1>
+          <figure>
+            <img [src]="specialist.picture" style="width: 50%;" alt="" class="img-fluid" />
+          </figure>
+          <h6>specialist: {{specialist.spec}}</h6>
+          <h6>Address: {{specialist.adresse.city}}</h6>
+          <h6>Phone: {{specialist.phone}}</h6>
+          <h3>Your Recommanded Doctor </h3>
+          <h1>DR. {{doctor.firstname}} {{doctor.lastname}}</h1>
+          <figure>
+            <img [src]="doctor.picture" style="width: 50%;" alt="" class="img-fluid">
+          </figure>
+          <h6>specialist: {{doctor.spec}}</h6>
+          <h6>Address: {{doctor.adresse.city}}</h6>
+          <h6>Phone: {{doctor.phone}}</h6>
+        </div>
+      </aside>
+      <div id="content" hidden>
+        <table cellpadding="5" cellspacing="0" style="border: 1px solid #ccc;font-size: 9pt;">
+          <tr>
+            <th style="background-color: #B8DBFD;border: 1px solid #ccc">Id</th>
+            <th style="background-color: #B8DBFD;border: 1px solid #ccc">Type</th>
+            <th style="background-color: #B8DBFD;border: 1px solid #ccc">Validation</th>
+            <th style="background-color: #B8DBFD;border: 1px solid #ccc">Created at</th>
+          </tr>
+          <div *ngFor="let p of paths">
+            <tr>
+              <td style="width:120px;border: 1px solid #ccc">{{p.id}}</td>
+              <td style="width:120px;border: 1px solid #ccc">{{p.type}}</td>
+              <td style="width:120px;border: 1px solid #ccc">{{p.validation}}</td>
+              <td style="width:120px;border: 1px solid #ccc">{{p.date | date}}</td>
+            </tr>
           </div>
-          <!-- /container -->
+        </table>
       </div>
-      <!-- /results -->
-      <div class="filters_listing">
-          <div class="container">
-              <ul class="clearfix">
-                  <li>
-                      <h6>Type</h6>
-                      <div class="switch-field">
-                          <input type="radio" id="all" name="type_patient" value="all" checked>
-                          <label for="all">All</label>
-                          <input type="radio" id="doctors" name="type_patient" value="doctors">
-                          <label for="doctors">Doctors</label>
-                          <input type="radio" id="clinics" name="type_patient" value="clinics">
-                          <label for="clinics">Clinics</label>
-                      </div>
-                  </li>
-                  <li>
-                      <h6>Layout</h6>
-                      <div class="layout_view">
-                          <a href="grid-list.html"><i class="icon-th"></i></a>
-                          <a href="#0" class="active"><i class="icon-th-list"></i></a>
-                          <a href="list-map.html"><i class="icon-map-1"></i></a>
-                      </div>
-                  </li>
-                  <li>
-                      <h6>Sort by</h6>
-                      <select name="orderby" class="selectbox">
-                          <option value="Closest">Closest</option>
-                          <option value="Best rated">Best rated</option>
-                          <option value="Men">Men</option>
-                          <option value="Women">Women</option>
-                      </select>
-                  </li>
-              </ul>
-          </div>
-          <!-- /container -->
-      </div>
-      <!-- /filters -->
-
-
-
-
-    <div class="container margin_60_35">
-        <div class="row">
-
-
-
-            <div class="col-lg-7">
-
-    <div class="strip_list" *ngFor="let p of paths">
-      <a href="#0" class="wish_bt"></a>
-      <figure>
-
-      </figure>
-      <small>Path</small>
-      <h3>{{p.type}}</h3>
-
-    <p  *ngIf="p.validation==true" style="color:darkseagreen"> Validated </p>
-      <p  *ngIf="p.validation==false" style="color:darkred">Not Validated </p>
-
-      <p>Date: {{p.created_at | date}} </p>
-
-    <p *ngIf="p.justification!=null">Justification: {{p.justification}} </p>
-
-      <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
-      <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""/></a>
-
-
-      <ul>
-      <li (click)="showDoctors(p.id)"><a><i class="icon_menu" ></i> See more</a></li>
-
-
-    </ul>
+      <!-- /aside -->
     </div>
-
-
-
-
-
-
-
-
-
-
-  <!-- /strip_list -->
-
-  <!-- /pagination -->
-
-
-
-
-                <nav aria-label="" class="add_top_20">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-                                        
-                                   
-
-  <aside class="col-lg-5" id="sidebar" id="hideShow" *ngIf="affichage">
-
-
-
-
-    <div class="box_profile" id="map_listing">
-      <small>Your specialist</small>
-      <figure>
-        <img [src]="specialist.picture" alt="" class="img-fluid"/>
-      </figure>
-      <small>{{specialist.spec}}</small>
-      <h1>DR. {{specialist.firstname}} {{specialist.lastname}} </h1>
-      <span class="rating">
-                            <i class="icon_star voted"></i>
-                            <i class="icon_star voted"></i>
-                            <i class="icon_star voted"></i>
-                            <i class="icon_star voted"></i>
-                            <i class="icon_star"></i>
-                            <small>(145)</small>
-                            <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""/></a>
-                        </span>
-      <ul class="statistic">
-        <li>854 Views</li>
-        <li>124 Patients</li>
-      </ul>
-      <ul class="contacts">
-        <li><h6>Address</h6>{{specialist.adresse.city}}</li>
-        <li><h6>Phone</h6>{{specialist.phone}}</li>
-      </ul>
-
-
-    </div>
-
-
-    <div class="box_profile" id="map_listing">
-      <small>Recommanded Doctor </small>
-      <figure>
-        <img [src]="doctor.picture" alt="" class="img-fluid">
-      </figure>
-      <small>{{doctor.spec}}</small>
-      <h1>DR. {{doctor.firstname}} {{doctor.lastname}}</h1>
-      <span class="rating">
-                        <i class="icon_star voted"></i>
-                        <i class="icon_star voted"></i>
-                        <i class="icon_star voted"></i>
-                        <i class="icon_star voted"></i>
-                        <i class="icon_star"></i>
-                        <small>(145)</small>
-                        <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
-                    </span>
-      <ul class="statistic">
-        <li>854 Views</li>
-        <li>124 Patients</li>
-      </ul>
-      <ul class="contacts">
-        <li><h6>Address</h6>{{doctor.adresse.city}}</li>
-        <li><h6>Phone</h6>{{doctor.phone}}</li>
-      </ul>
-
-
-
-    </div>
-
-  </aside>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- /aside -->
-
-</div>
-<!-- /row -->
-</div>
-<!-- /container -->
+    <!-- /row -->
+  </div>
+  <!-- /container -->
 </main>
-
-
-
 <style>
-
 button {
   display: block;
   padding: 1em 2em;
@@ -245,15 +92,15 @@ button {
   border-radius: 0.3em;
   margin-top: 4em;
   cursor: pointer;
-  }
+}
 
-  button:hover {
+button:hover {
   background-color: #2487c9;
-  }
+}
 
-  /* Notifications */
+/* Notifications */
 
-  .notification {
+.notification {
   display: inline-block;
   position: relative;
   padding: 0.6em;
@@ -261,15 +108,15 @@ button {
   border-radius: 0.2em;
   font-size: 1.3em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
+}
 
-  .notification::before,
-  .notification::after {
+.notification::before,
+.notification::after {
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  }
+}
 
-  /*.notification::before {
+/*.notification::before {
   display: block;
   content: "\f0f3";
   font-family: "FontAwesome";
@@ -296,100 +143,93 @@ button {
   transition: transform, opacity;
   transition-duration: 0.3s;
   transition-timing-function: ease-out;
-  }
+}
 
-  .notification.notify::before {
+.notification.notify::before {
   -webkit-animation: ring 1.5s ease;
   animation: ring 1.5s ease;
-  }
+}
 
-  .notification.show-count::after {
+.notification.show-count::after {
   -webkit-transform: scale(1);
   transform: scale(1);
   opacity: 1;
-  }
+}
 
-  -webkit-keyframes ring {
+-webkit-keyframes ring {
   0% {
-  -webkit-transform: rotate(35deg);
-  }
-  12.5% {
-  -webkit-transform: rotate(-30deg);
-  }
-  25% {
-  -webkit-transform: rotate(25deg);
-  }
-  37.5% {
-  -webkit-transform: rotate(-20deg);
-  }
-  50% {
-  -webkit-transform: rotate(15deg);
-  }
-  62.5% {
-  -webkit-transform: rotate(-10deg);
-  }
-  75% {
-  -webkit-transform: rotate(5deg);
-  }
-  100% {
-  -webkit-transform: rotate(0deg);
-  }
+    -webkit-transform: rotate(35deg);
   }
 
-  -keyframes ring {
+  12.5% {
+    -webkit-transform: rotate(-30deg);
+  }
+
+  25% {
+    -webkit-transform: rotate(25deg);
+  }
+
+  37.5% {
+    -webkit-transform: rotate(-20deg);
+  }
+
+  50% {
+    -webkit-transform: rotate(15deg);
+  }
+
+  62.5% {
+    -webkit-transform: rotate(-10deg);
+  }
+
+  75% {
+    -webkit-transform: rotate(5deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(0deg);
+  }
+}
+
+-keyframes ring {
   0% {
-  -webkit-transform: rotate(35deg);
-  transform: rotate(35deg);
+    -webkit-transform: rotate(35deg);
+    transform: rotate(35deg);
   }
+
   12.5% {
-  -webkit-transform: rotate(-30deg);
-  transform: rotate(-30deg);
+    -webkit-transform: rotate(-30deg);
+    transform: rotate(-30deg);
   }
+
   25% {
-  -webkit-transform: rotate(25deg);
-  transform: rotate(25deg);
+    -webkit-transform: rotate(25deg);
+    transform: rotate(25deg);
   }
+
   37.5% {
-  -webkit-transform: rotate(-20deg);
-  transform: rotate(-20deg);
+    -webkit-transform: rotate(-20deg);
+    transform: rotate(-20deg);
   }
+
   50% {
-  -webkit-transform: rotate(15deg);
-  transform: rotate(15deg);
+    -webkit-transform: rotate(15deg);
+    transform: rotate(15deg);
   }
+
   62.5% {
-  -webkit-transform: rotate(-10deg);
-  transform: rotate(-10deg);
+    -webkit-transform: rotate(-10deg);
+    transform: rotate(-10deg);
   }
+
   75% {
-  -webkit-transform: rotate(5deg);
-  transform: rotate(5deg);
+    -webkit-transform: rotate(5deg);
+    transform: rotate(5deg);
   }
+
   100% {
-  -webkit-transform: rotate(0deg);
-  transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
-  }
-  </style>
+}
 
-
-  <script>
-
-      var el = document.querySelector('.notification');
-      $( document ).ready(function() {
-  var count = Number(el.getAttribute('data-count')) || 0;
-  el.setAttribute('data-count', count + @ViewBag.nbNotif);
-  el.classList.remove('notify');
-  el.offsetWidth = el.offsetWidth;
-  el.classList.add('notify');
-  if (count === 0) {
-  el.classList.add('show-count');
-  }});
-
-
-
-
-
-</script>
-
-  }
+</style>

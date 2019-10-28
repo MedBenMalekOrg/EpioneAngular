@@ -23,6 +23,8 @@ export class RecommandationComponent implements OnInit {
   ngOnInit() {
 
     this.appointmentsSub = this.recommandationService.getAppointmentsForDoctor().subscribe((response) => {
+      console.log("appointments")
+      console.log(response)
       this.appointments = response;
     },(e) => {
       console.log('error',e);
@@ -60,5 +62,18 @@ export class RecommandationComponent implements OnInit {
 
   }
 
+  acceptAppointment(appointment) {
+  appointment.status = 'confirmed'
+  this.recommandationService.changeStatusAppointment(appointment.id,'confirmed');
+
+
+  }
+
+
+  cancelAppointment(appointment) {
+      appointment.status = 'refused'
+   this.recommandationService.changeStatusAppointment(appointment.id,'refused');
+
+  }
 
 }

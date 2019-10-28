@@ -15,7 +15,7 @@ export class ListNotificationDoctorComponent implements OnInit {
 
   ngOnInit() {
 
-    this.appointmentsSub = this.recommandationService.listNotificationsPatient().subscribe((response) => {
+    this.appointmentsSub = this.recommandationService.listNotificationsDoctor().subscribe((response) => {
       this.notifications = response;
       console.log(this.notifications);
     },(e) => {

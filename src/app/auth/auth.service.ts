@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-
+import {Http,Headers,RequestOptions } from '@angular/http';
 import { environment } from '../../environments/environment';
 import {User} from '../Models/User.model';
+
 
 const BACKEND_URL = environment.apiUrl + '/user';
 
@@ -39,6 +40,8 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
+
+
     const authData: { username: string; password: string } = { username: username, password: password };
     let userId;
     let Thetoken;
@@ -61,7 +64,7 @@ export class AuthService {
           this.authStatusListener.next(false);
         },
         () => {
-          this.http.get<User>(BACKEND_URL + '/getUserID/'+userId)
+          this.http.get<User>(BACKEND_URL + '/getUser/'+userId)
             .subscribe((res) => {
               this.user = res;
               this.userListener.next(this.user);

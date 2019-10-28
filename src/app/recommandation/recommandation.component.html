@@ -1,92 +1,66 @@
+<main>
+  <div id="results">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h4><strong>List of all my appointments</strong></h4>
+        </div>
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+      <div class="margin_60_35" *ngIf="!appointments || (appointments && appointments.length == 0)">
+    <div class="container">
+      <div class="main_title">
 
-<div class="container-fluid full-height">
-  <div class="row row-height">
-    <div class="col-lg-5 content-left">
-      <form>
-        <div class="search_bar_wrapper">
-          <div class="search_bar_list">
 
-            <input type="text" class="form-control" placeholder="Ex. Specialist, Name, Doctor...">
-            <input type="submit" value="Search">
+        <h3 >There is no appointments</h3>
+      </div>
+    </div>
+    </div>
+  <div class="row col-md-12 col-lg-12 " style="margin-top: 30px;" *ngIf="appointments && appointments.length != 0">
+    <div class="col-lg-8 col-md-8">
+      <div class="strip_list " *ngFor="let a of appointments">
+        <div class="row">
+
+          <div class="col-lg-8 col-md-8">
+
+            <figure class="cursor" style="left: -86px !important;">
+              <a (click)="getPathFromAppointment(a.id)"><img src="/assets/img/rdv.png" alt=""></a>
+            </figure>
+            <h3>Appointment with {{a.patient.firstname}} {{a.patient.lastname}}
+              <small style="color: #0a652b">{{a.status}}</small></h3>
+                    <div style="margin: 15px;" *ngIf="a.status != 'refused'">
+                      <a *ngIf="a.status == 'waiting'" class="cursor btn btn-update" style="color:"  (click)="acceptAppointment(a)">Accept</a>
+           <a class="cursor btn btn-cancel" style="color:"  (click)="cancelAppointment(a)">Cancel</a>
+         </div>
+            <h6>Date: {{a.date | date}}</h6>
+            <h6>Description: {{a.description}}</h6>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <figure class="cursor" style="left: -86px !important;">
+              <a (click)="getPathFromAppointment(a.id)"><img src="{{a.patient.picture}}" alt=""></a>
+            </figure>
+            <h3>Patient information</h3>
+            <h6 *ngIf="a.patient.birthday">Birthday: {{a.patient.birthday}}</h6>
+            <h6>Email: {{a.patient.email}}</h6>
+            <h6>Adresse: {{a.patient.adresse.city}}</h6>
+            
           </div>
         </div>
-        <div class="filters_listing map_listing">
-          <ul class="clearfix">
-            <li>
-              <h6>Type</h6>
-              <div class="switch-field">
-                <input type="radio" id="all" name="type_patient" value="all" checked>
-                <label for="all">All</label>
-                <input type="radio" id="doctors" name="type_patient" value="doctors">
-                <label for="doctors">Doctors</label>
-                <input type="radio" id="clinics" name="type_patient" value="clinics">
-                <label for="clinics">Clinics</label>
-              </div>
-            </li>
-            <li>
-              <h6>Layout</h6>
-              <div class="layout_view">
-                <a href="grid-list.html"><i class="icon-th"></i></a>
-                <a href="list.html"><i class="icon-th-list"></i></a>
-                <a href="#0" class="active"><i class="icon-map-1"></i></a>
-              </div>
-            </li>
-            <li>
-              <h6>Sort by</h6>
-              <select name="orderby" class="selectbox">
-                <option value="Closest">Closest</option>
-                <option value="Best rated">Best rated</option>
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
-              </select>
-            </li>
-          </ul>
-        </div>
-        <!-- /filters -->
-      </form>
-      <app-fb-like></app-fb-like>
-      <app-tweet></app-tweet>
-      <div class="strip_list" *ngFor="let a of appointments">
-        <a href="#0" class="wish_bt"></a>
-        <figure>
-          <a href="detail-page.html"><img src="img/doctor_listing_1.jpg" alt=""></a>
-        </figure>
-        <small>Appointment</small>
-        <h3>{{a.date | date}}</h3>
-        <p>{{a.description}}</p>
-        <p style="color: #0a652b">{{a.status}}</p>
-        <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
-        <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
         <ul>
-          <li><a href="#0" onclick="onHtmlClick('Doctors', 0)" class="btn_listing">View on Map</a></li>
-          <li><a href="https://www.google.com/maps/dir//Assistance+–+Hôpitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x0:0xa6a9af76b1e2d899!2sAssistance+–+Hôpitaux+De+Paris!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361" target="_blank">Directions</a></li>
-          <li><a (click)="getPathFromAppointment(a.id)">View path</a></li>
-        </ul>
-        <ul>
-          <br/>
-          <div *ngIf="affichagePath">  <li><a (click)="ajoutRecommandation(a.id)">Add Recommandation</a></li></div>
-
-
-
+        
+          <li class="cursor"><a class="btn" (click)="getPathFromAppointment(a.id)">View path</a></li>
+          <app-fb-like></app-fb-like>
+          <app-tweet></app-tweet>
+    
+          <li class="cursor"><a class="btn" (click)="ajoutRecommandation(a.id)">Add Recommandation</a></li>
         </ul>
       </div>
-
-      <!-- /strip_list -->
-
-
-      <!-- /strip_list -->
-
-
-      <!-- /strip_list -->
-
-      <!-- /strip_list_map -->
-
-      <p class="text-center add_top_30"><a href="#0"><strong>Load more</strong></a></p>
     </div>
     <!-- /content-left-->
-
-
-    <div class="col-lg-7 ">
+    <div class="col-lg-4  col-md-4">
       <div class="box_general_3 booking">
         <form>
           <div class="title">
@@ -94,80 +68,56 @@
             <small>This is the recommandations of the patient </small>
           </div>
           <div class="row">
-
-
-            <div class="row">
-              <div class="col-lg-12" style="padding-left: 100px;width: 500px" *ngFor="let path of paths">
-                <!-- /appointment -->
-
-                <ng-container style="width:500px">
-
-                  <div class="strip_list " onclick="showDetail()">
-                    <div *ngIf="affichagePath"   style="width: 500px" style="visibility: visible">
-
-
-                      <a href="#0" class="wish_bt"></a>
-
-                      <small>Path</small>
-                      <h3>{{path.type}}</h3>
-
-                      <p style="color:forestgreen" *ngIf="path.validation==true">Validation : Validated </p>
-                      <p style="color:darkred" *ngIf="path.validation==false">Validation : Validated </p>
-
-                      <p>Date: {{path.created_at | date}} </p>
-
-                      <p *ngIf="path.justification==true">Justification: {{path.justification}} </p>
-
-                      <span class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></span>
-                      <a href="badges.html" data-toggle="tooltip" data-placement="top" data-original-title="Badge Level" class="badge_list_1"><img src="img/badges/badge_1.svg" width="15" height="15" alt=""></a>
-                      <ul>
-
-                        <br />
-                        <a  style="color:white;" (click)="updateRecommandation(path.id,path.type)" class="btn_1">Update Recommandation</a>
-
-                        <br />
-                        <i class="icon-trash-1">Delete recommandation</i>
-
-
-                      </ul>
-
-                      <!-- map-->
-
-                    </div>
+            <h6 *ngIf="paths && paths.length == 0">There is no path for this patient.</h6>
+            <div class="col-lg-12" *ngFor="let path of paths">
+              <!-- /appointment -->
+              <ng-container>
+                <div class="strip_list " onclick="showDetail()">
+                  <div *ngIf="affichagePath" style="visibility: visible">
+                    <figure>
+                      <a><img src="/assets/img/path.png" alt=""></a>
+                    </figure>
+                    <h3>Patient path</h3>
+                    <p style="color:forestgreen" *ngIf="path.validation==true">Validated </p>
+                    <p style="color:darkred" *ngIf="path.validation==false">Not Validated </p>
+                    <h6>Type: {{path.type}}</h6>
+                    <h6>Date: {{path.created_at | date}} </h6>
+                    <h6 *ngIf="path.justification!=null">Justification: {{path.justification}} </h6>
+                    <a class="cursor" style="color:white;" (click)="updateRecommandation(path.id,path.type)" class="btn_1">Update Recommandation</a>
+                    <!-- map-->
                   </div>
-
-                </ng-container>
-
-                <!-- /appointment -->
-                <!-- /pagination -->
-
-                <!-- /pagination -->
-
-                <!-- /col -->
-              </div>
-              <!-- /row -->
-
-
+                </div>
+              </ng-container>
+              <!-- /col -->
             </div>
-
+            <!-- /row -->
           </div>
           <!-- /row -->
-
           <hr>
-
         </form>
       </div>
-
-
-
     </div>
-
   </div>
-
   <!-- /row-->
-</div>
+</main>
 <!-- /container-fluid -->
-
-
 <!-- /map-right-->
-
+<style>
+.cursor {
+  cursor: pointer;
+}
+.btn-update {
+    color: white !important;
+    background-color: #8BC34A;
+    border-color: #8BC34A;
+    margin-right: 15px;
+    margin-left: 30px;
+}.btn-cancel {
+    color: white !important;
+    background-color: #E91E63;
+    border-color: #E91E63;
+}
+.right-ul{
+  text-align: right;
+}
+</style>

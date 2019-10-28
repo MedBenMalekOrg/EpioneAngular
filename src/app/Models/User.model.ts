@@ -29,6 +29,7 @@ export interface User {
   remboursement: string;
   website: string;
   office_Number: string;
+  spec:string;
   speciality: {
     speciality: string
   };
